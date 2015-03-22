@@ -2,6 +2,7 @@
 # Four spaces as indentation [no tabs]
 import sys
 import Queue
+import math
 from common import *
 
 # ==========================================
@@ -19,15 +20,18 @@ class PathFinder_A_Star:
     # ------------------------------------------
 
     def get_cost(self, x1, y1, x2, y2):
-        # TODO Cost of movement from (x1, y1) to (x2, y2)
-        return 0
+
+        xdif = x1 - x2
+        ydif = y1 - y2
+
+        return math.sqrt((xdif * xdif) + (ydif * ydif))
 
     # ------------------------------------------
     # Heuristic
     # ------------------------------------------
 
     def heuristic(self, x1, y1, x2, y2):
-       # TODO heuristic function returns an integer
+       # TODO heuristic function returns an integer\;\;\;\;
        return 0
     
     # ------------------------------------------
