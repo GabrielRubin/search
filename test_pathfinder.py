@@ -56,8 +56,8 @@ class Test_A_Star(unittest.TestCase):
     def solvable(self, map_name, expected):
         sx, sy, gx, gy, map, map_width, map_height = read_map(map_name)
         pathfinder = PathFinder_A_Star()
-        pathfinder.solve(sx, sy, gx, gy, map, map_width, map_height)
-        self.assertEqual(pathfinder.get_solvable(), expected)
+        #pathfinder.solve(sx, sy, gx, gy, map, map_width, map_height)
+        self.assertEqual(pathfinder.get_solvable(sx, sy, gx, gy, map, map_width, map_height), expected)
 
     def plan_match(self, map_name, moves):
         sx, sy, gx, gy, map, map_width, map_height = read_map(map_name)
@@ -67,7 +67,7 @@ class Test_A_Star(unittest.TestCase):
     def max_tree_height(self, map_name, height):
         sx, sy, gx, gy, map, map_width, map_height = read_map(map_name)
         pathfinder = PathFinder_A_Star()
-        plan = pathfinder.solve(sx, sy, gx, gy, map, map_width, map_height)
+        plan = pathfinder.solve(sx, sy, gx, gy, map, map_width, map_height, True)
         self.assertEqual(pathfinder.get_max_tree_height(), height)
 
     def min_moves(self, map_name, moves):

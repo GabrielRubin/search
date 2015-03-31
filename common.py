@@ -3,7 +3,7 @@
 import os, inspect
 
 PATH        = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-DEFAULT_MAP = "easy.txt"
+DEFAULT_MAP = "test02.txt"
 DEBUG       = False
 # Frames per second (more means faster)
 FPS         = 30
