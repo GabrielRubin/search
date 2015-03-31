@@ -80,6 +80,8 @@ class PathFinder_A_Star:
         if(PathFinder_A_Star().get_solvable(sx, sy, gx, gy, copy.deepcopy(map_data), map_width, map_height) == False):
             return None
 
+        result = None
+
         visitedNodes = []
 
         nextNodes = Queue.PriorityQueue()
@@ -104,9 +106,15 @@ class PathFinder_A_Star:
 
             if(currentNode.m_x == goal.m_x and currentNode.m_y == goal.m_y):
 
-                result = self.reconstruct_path(currentNode)
+                resultPartial = self.reconstruct_path(currentNode)
 
-                if(getMaxHeigh == False):
+                if(result is None):
+                    result = resultPartial
+                else:
+                    if(len(resultPartial) < len(result)):
+                        result = resultPartial
+
+                if(getMaxHeigh == False and result is not None):
                     return result
 
                 continue
@@ -141,7 +149,7 @@ class PathFinder_A_Star:
         if(getMaxHeigh):
             self.m_maxTreeHeight = maxHeight
 
-        return None
+        return result
 
     # ------------------------------------------
     # Reconstruct Path (for link)
