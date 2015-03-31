@@ -3,43 +3,90 @@
 import sys
 import Queue
 import math
+
 from common import *
 
 # ==========================================
-# PathFinder A Star
+# Class Node
+# ==========================================
+
+class Node:
+
+    def _init_(self, x, y, type="Common", cost=1):
+        self.m_x = x
+        self.m_y = y
+        self.m_type = type
+        self.m_cost = cost
+
+    # ======================================
+    # Cost
+    # ======================================
+
+    def get_cost(self):
+        return self.m_cost
+
+# ==========================================
+# Class PathFinder A Star
 # ==========================================
 
 class PathFinder_A_Star:
 
     def __init__(self):
-        # TODO initialize your attributtes here if needed
+
         pass
-
-    # ------------------------------------------
-    # Cost
-    # ------------------------------------------
-
-    def get_cost(self, x1, y1, x2, y2):
-
-        xdif = x1 - x2
-        ydif = y1 - y2
-
-        return math.sqrt((xdif * xdif) + (ydif * ydif))
 
     # ------------------------------------------
     # Heuristic
     # ------------------------------------------
 
     def heuristic(self, x1, y1, x2, y2):
-       # TODO heuristic function returns an integer\;\;\;\;
-       return 0
+
+        xdif = x1 - x2
+        ydif = y1 - y2
+
+        return abs(xdif) + abs(ydif)
     
     # ------------------------------------------
     # Solve
     # ------------------------------------------
 
     def solve(self, sx, sy, gx, gy, map_data, map_width, map_height):
-        # TODO return a list of movements (may be empty) if plan found, otherwise return None
+
+        visitedNodes = []
+
+        nextNodes = Queue.PriorityQueue()
+
+        pathNodes = []
+
+        start = Node(sx, sy)
+
+        goal = Node(gx, gy)
+
+        startNeighbors = successors(start.m_x, start.m_y, map_data, map_width, map_height)
+
+        foundPath = False
+
+        for neighbor in startNeighbors:
+            node = Node(neighbor[0], neighbor[1])
+
+            score = self.heuristic(start.m_x, start.m_y, node.m_x, node.m_y)
+
+            nextNodes.put(score * -1, node) # Phytons PriorityQueue gets elements by lowest numbers (score * -1) (TEST ?)
+
+        while(nextNodes.empty() == False and foundPath == False):
+
+            currentNode = nextNodes.get()[1]
+
+            if(currentNode.m_x == goal.m_x and currentNode.m_y == goal.m_y):
+                pathNodes.append(currentNode)
+                foundPath = True
+                break
+
+            visitedNodes.append(currentNode)
+
+        if(foundPath == True):
+            return pathNodes
+
         return None
 
     # ------------------------------------------
